@@ -24,7 +24,7 @@ docker run -d --entrypoint /usr/bin/php --name phpinfo -p 8080:8080 -v ${PWD}/sr
 ```
 git pull
 git checkout santander
-docker build --file Dockerfile_optimizado --tag isper79/phpinfo:santander-optimizado.
+docker build --file Dockerfile_optimizado --tag isper79/phpinfo:santander-optimizado .
 docker push manyogil/phpinfo:santander-optimizado
 ```
 ```

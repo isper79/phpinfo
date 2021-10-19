@@ -29,5 +29,9 @@ docker push paularestrepo/phpinfo:santander-optimizado
 ```
 ```
 ```
+# Instrucciones para ejecutar el contenedor 
 
+docker run -d --entrypoint /usr/bin/php --name phpinfo -p 8080:8080 --restart always -v ${PWD}/src/index.php:/src/index.php:ro paularestrepo/phpinfo:santander-optimizado -f src/index.php -S 0.0.0.0:8080
+```
+```
 

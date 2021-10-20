@@ -4,7 +4,7 @@ metadata:
   name: phpinfo-po
   labels: 
     app: phpinfo
-    branch: santander    
+    branch: santander-optimizado
 spec:
   containers:
     -

@@ -1,0 +1,29 @@
+name: CI
+on: 
+  push:
+    branches:
+      - santander
+jobs:
+  docker:
+    runs-on: ubutu-18.04
+    steps: 
+      -
+        name: step-checkout
+        uses: actions/checkout@v2
+      -
+        name: uuid
+        run: uuid=$(uuid)
+      -
+        name: step-build
+        run: docker build --file Dockerfile --tag ${uuid} .
+      -
+        name: step-run
+        run: docker run -d --entrypoint /usr/bin/php --name phpinfo -p 80:8080 -v ${PWD}/src/index.php:/src/index.php:ro phpinfo:${uuid} -f src/index.php -S 0.0.0.0:8080
+      - 
+        name: step-test
+        run: while true; do sleep 10; curl localhost/src/index.php | grep phpinfo && break; done
+#   swarm:
+#   kubernetes:
+#   openshift:
+  
+  

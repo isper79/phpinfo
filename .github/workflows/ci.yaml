@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v2
       -
         name: uuid
-        run: uuid=${RANDOM}
+        run: EXPORT uuid=$( ${RANDOM} )
       -
         name: step-build
         run: docker build --file Dockerfile --tag ${uuid} .

@@ -5,14 +5,14 @@ on:
       - santander
 jobs:
   docker:
-    runs-on: ubutu-18.04
+    runs-on: ubuntu-18.04
     steps: 
       -
         name: step-checkout
         uses: actions/checkout@v2
       -
         name: uuid
-        run: uuid=$(uuid)
+        run: uuid=${RANDOM}
       -
         name: step-build
         run: docker build --file Dockerfile --tag ${uuid} .

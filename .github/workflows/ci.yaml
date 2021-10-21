@@ -4,25 +4,23 @@ on:
     branches:
       - santander
 env:
-  uuid: 7987564
+  uuid: 77223
 jobs:
   docker:
     runs-on: ubuntu-18.04
-    steps: 
+    steps:
       -
-        name: step-checkout
+        name: checkout
         uses: actions/checkout@v2
       -
-        name: step-build
-        run: docker build --file Dockerfile --tag ${uuid} .
+        name: build
+        run: docker build --file Dockerfile --tag phpinfo:${uuid} .
       -
-        name: step-run
+        name: runsrc/index.php -S 0.0.0.0:8080
         run: docker run -d --entrypoint /usr/bin/php --name phpinfo -p 80:8080 -v ${PWD}/src/index.php:/src/index.php:ro phpinfo:${uuid} -f src/index.php -S 0.0.0.0:8080
-      - 
-        name: step-test
+      -
+        name: test
         run: while true; do sleep 10; curl localhost/src/index.php | grep phpinfo && break; done
-#   swarm:
-#   kubernetes:
-#   openshift:
-  
-  
+  #swarm:
+  #kubernetes:
+  #openshift:

@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - santander
+env:
+  uuid: 7987564
 jobs:
   docker:
     runs-on: ubuntu-18.04
@@ -10,9 +12,6 @@ jobs:
       -
         name: step-checkout
         uses: actions/checkout@v2
-      -
-        name: uuid
-        run: EXPORT uuid=$( echo ${RANDOM} )
       -
         name: step-build
         run: docker build --file Dockerfile --tag ${uuid} .

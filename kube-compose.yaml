@@ -30,7 +30,7 @@ spec:
               name: JAVA_HOME
               value: /var/lib/java
           image: paularestrepo/phpinfo:santander
-          imagePullPolicy: Always
+#           imagePullPolicy: Always
           name: phpinfo-container
           ports: 
             -  

@@ -22,31 +22,29 @@ jobs:
         name: test
         run: while true; do sleep 10; curl localhost/src/index.php | grep phpinfo && break; done
   swarm:
-    runs-on: ubuntu-18.04
-    steps:
-      -
-        name: checkout
-        uses: actions/checkout@v2
-      -
-        name: build
-        run: docker build --file Dockerfile --tag phpinfo:${uuid} .
-      -
-        name: swarm
-        run: docker swarm init
-      -
-        name: compose
-        run: sed -i /node.role/s/worker/manager/ docker-compose.yaml
-      -
-        name: nodeport
-        run: sed -i /8080:8080/s/8080/80/ docker-compose.yaml
-      -
-        name: deploy
-        run: docker stack deploy -c docker-compose.yaml phpinfo
-      -
-        name: temp
-        run: ifconfig
-      -
-        name: test
-        run: while true; do sleep 10; curl localhost/src/index.php | grep phpinfo && break; done
+    -
+      name: checkout
+      uses: actions/checkout@v2
+    -
+       name: build
+       run: docker build --file Dockerfile --tag phpinfo:${uuid} .
+    -
+       name: swarm
+       run: docker swarm init
+    -
+      name: compose
+      run: sed -i /node.role/s/worker/manager/ docker-compose.yaml
+    -
+      name: nodeport
+      run: sed -i /8080:8080/s/8080/80/ docker-compose.yaml
+    -
+      name: image
+      run: sed -i /image:.*phpinfo/s/image:.*$/image:' 'phpinfo:${uuid}/ docker-compose.yaml
+    -
+      name: deploy
+      run: docker stack deploy -c docker-compose.yaml phpinfo
+    -
+      name: test
+      run: while true; do sleep 10; curl $( ifconfig | grep eth0 -A 1 | awk /inet/'{ print $2 }' )/src/index.php | grep phpinfo && break; done
   #kubernetes:
   #openshift:

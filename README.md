@@ -1,3 +1,5 @@
+[![CI](https://github.com/isper79/phpinfo/actions/workflows/ci.yaml/badge.svg?branch=santander)](https://github.com/isper79/phpinfo/actions/workflows/ci.yaml) 
+
 # phpinfo
 
 ```

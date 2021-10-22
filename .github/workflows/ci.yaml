@@ -69,11 +69,11 @@ jobs:
         name: image
         run: sed -i /image:.*phpinfo/s/image:.*$/image:' 'phpinfo:${uuid}/ kube-compose.yaml
       -
-        name: deploy
-        run: kubectl apply -f kube-compose.yaml
+        name: cm
+        run: kubectl create cm --from-file ./src/index.php phpinfo-cm
       -
-        name: temp
-        run: sleep 100; kubectl describe pod
+        name: deploy
+        run: kubectl apply -f kube-compose.yaml      
       -
         name: test
         run: while true; do sleep 10; kubectl logs svc/phpinfo-svc| grep PHP && break; done

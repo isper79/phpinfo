@@ -30,7 +30,6 @@ spec:
               name: JAVA_HOME
               value: /var/lib/java
           image: paularestrepo/phpinfo:santander
-#           imagePullPolicy: Always
           name: phpinfo-container
           ports: 
             -  
@@ -44,15 +43,15 @@ spec:
               subPath: index.php
       volumes: 
         - 
-          configMap: 
+          secret: 
             defaultMode: 0400
             items: 
               - 
                 key: index.php
                 mode: 0400
                 path: index.php
-            name: phpinfo-cm
-            # kubectl create cm --from-file ./src/index.php phpinfo-cm
+            secretName: phpinfo-secret
+            # kubectl create secret generic --from-file ./src/index.php phpinfo-secret
           name: phpinfo-volume
 ---
 apiVersion: v1

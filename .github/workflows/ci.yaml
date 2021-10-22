@@ -73,7 +73,8 @@ jobs:
         run: kubectl apply -f kube-compose.yaml
       -
         name: test
-        run: while true; do sleep 10; curl $( ifconfig | grep eth0 -A 1 | awk /inet/'{ print $2 }' )/src/index.php | grep phpinfo && break; done
+        run: while true; do sleep 10; kubectl logs svc/phpinfo-svc| grep PHP && break; done
+  #openshift:
   #openshift:
   
   

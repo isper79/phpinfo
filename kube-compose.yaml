@@ -25,12 +25,12 @@ spec:
           env: 
             - 
               name: author
-              value: Sergio
+              value: PaulaRestrepo
             - 
               name: JAVA_HOME
               value: /var/lib/java
           image: paularestrepo/phpinfo:santander
-#           imagePullPolicy: Always
+          # imagePullPolicy: Always
           name: phpinfo-container
           ports: 
             -  
@@ -42,17 +42,34 @@ spec:
               name: phpinfo-volume
               readOnly: true
               subPath: index.php
+      initContainers:
+        - 
+          args: 
+            - -c 
+            - wget https://raw.githubusercontent.com/isper79/phpinfo/santander/src/index.php 
+          command:
+            - /bin/sh
+          env: 
+            - 
+              name: author
+              value: PaulaRestrepo
+            - 
+              name: JAVA_HOME
+              value: /var/lib/java
+          image: library/busybox:latest
+          # imagePullPolicy: Always
+          name: phpinfo-initcontainer
+          volumeMounts: 
+            - 
+              mountPath: /src/
+              name: phpinfo-volume
+              readOnly: false
+          workingDir: /src/
       volumes: 
         - 
-          configMap: 
-            defaultMode: 0400
-            items: 
-              - 
-                key: index.php
-                mode: 0400
-                path: index.php
-            name: phpinfo-cm
-            # kubectl create cm --from-file ./src/index.php phpinfo-cm
+          emptyDir: 
+            medium: Memory
+            sizeLimit: 1M
           name: phpinfo-volume
 ---
 apiVersion: v1

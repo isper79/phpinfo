@@ -46,7 +46,7 @@ spec:
         - 
           args: 
             - -c 
-            - wget https://raw.githubusercontent.com/isper79/phpinfo/santander/src/index.php 
+            - test -f index.php && wget https://raw.githubusercontent.com/isper79/phpinfo/santander/src/index.php 
           command:
             - /bin/sh
           env: 
@@ -67,9 +67,9 @@ spec:
           workingDir: /src/
       volumes: 
         - 
-          emptyDir: 
-            medium: Memory
-            sizeLimit: 1M
+          persistentVolumeClaim: 
+            claimName: phpinfo-pvc
+            readOnly: false            
           name: phpinfo-volume
 ---
 apiVersion: v1
@@ -87,3 +87,12 @@ spec:
     app: phpinfo
     branch: santander
   type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolumenClaim
+metadata: 
+  name: phpinfo-pvc
+spec:
+  accessModes: 
+    - ReadWriteOnce
+  storageClassName: gp2
